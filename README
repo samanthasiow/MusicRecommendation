@@ -1,0 +1,95 @@
+--------
+SPOTBOT
+--------
+Music Recommendation Feature, built on top of the Spotify API, and the EchoNest API.
+
+Built by:
+	Samantha Siow, 
+	ssiow1@jhu.edu, 
+	May 14th 2015
+
+For CS466 Information Retrieval and Web Agents at Johns Hopkins University.
+
+
+-----------
+How to Run:
+-----------
+Ensure the following packages are installed by entering "sudo cpan install [package name]".
+
+Packages:
+WWW::Spotify
+WWW::TheEchoNest
+
+I've also edited the .pm for both of these packages and included them in this tar file,
+so in order for this to function, you will need to go to your Perl package library:
+
+For OSX:
+/Libary/Perl/5.16/WWW/TheEchoNest.pm
+/Libary/Perl/5.16/WWW/Spotify.pm
+
+and replace the .pm files I have created respectively.
+
+Run using:
+	
+	perl spotbot_client.prl
+
+Note: This program may take a while to initialize the vectors because there is a
+limit on the number of calls I can make to the EchoNest API (20 calls/minute), so
+the program sleeps for a minute whenever these calls have been used. This is
+especially prevalent in playlists with > 10 songs.
+
+----------------------
+Edits to the packages
+----------------------
+
+For the WWW::Spotify package, I added the following functionality:
+Get a playlist by a user ID and a playlist ID.
+Get playlist tracks by a user ID and playlist ID.
+Display all of a user's playlists by their user ID.
+
+For the WWW::TheEchoNext package, I added a minor fix to the uri escape
+function.
+
+--------------------------
+What does this program do?
+--------------------------
+The user inputs two playlists that they have created using the Spotify app, 
+one that contains songs that they like and another that contains songs that 
+they do not like. The program will allow the user to classify songs as music 
+they might like or music they might not liked, by computing the similarity
+between a playlist and the two vector profiles.
+
+For the purpose of testing, I used playlists that Spotify had created and labeled
+as different moods. For the liked playlist, I used the playlist Chill>Mellow Morning,
+and for the disliked playlist, I used the playlist EDM/Dance>Welcome To The House.
+
+For the other playlists, I used other playlists from within that "Mood" in order to
+determine whether or not a user would have similar tastes to the original.
+
+-------------------------------
+How does this program do that?
+-------------------------------
+I create two vectors using the songs from the Liked playlist and the Disliked 
+playlist, with the keys being song attributes that I pull from the EchoNest API.
+These attributes include Tempo, Energy, Liveness, Loudness, Key, Artists, Genres
+and the values being the respective value of each attribute. There exists an index 
+for each song in the @doc_vector array, this points to a hash of the attribute values.
+
+Next, I create centroids from these vectors to create the vector profiles by
+computing the average of each attribute across both playlists. This centroid
+will be used as the basis by which to measure other songs and playlists.
+
+
+-------------------------------
+Empirical Evaluation
+-------------------------------
+I will be using the playlist similarity to show the similarity between a few playlists I have
+created, some of which will be designated as liked and some as disliked. Because of the limitation on
+calls, the playlists do not contain many songs. I will be measuring these playlists against 
+my two centroids and presenting my results as against the actual sense of the playlist.
+
+All playlists marked with Y are meant to be 'liked' by the user, and all playlists marked with
+a 'N' are meant to be 'disliked' by the user.
+
+I have included my results in the file EVALUATION.
+
