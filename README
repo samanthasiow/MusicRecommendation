@@ -80,16 +80,3 @@ computing the average of each attribute across both playlists. This centroid
 will be used as the basis by which to measure other songs and playlists.
 
 
--------------------------------
-Empirical Evaluation
--------------------------------
-I will be using the playlist similarity to show the similarity between a few playlists I have
-created, some of which will be designated as liked and some as disliked. Because of the limitation on
-calls, the playlists do not contain many songs. I will be measuring these playlists against 
-my two centroids and presenting my results as against the actual sense of the playlist.
-
-All playlists marked with Y are meant to be 'liked' by the user, and all playlists marked with
-a 'N' are meant to be 'disliked' by the user.
-
-I have included my results in the file EVALUATION.
-
